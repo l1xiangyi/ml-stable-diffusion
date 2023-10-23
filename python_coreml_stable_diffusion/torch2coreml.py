@@ -505,6 +505,7 @@ def convert_vae_decoder(pipe, args):
             super().__init__()
             self.post_quant_conv = pipe.vae.post_quant_conv.to(dtype=torch.float32)
             self.decoder = pipe.vae.decoder.to(dtype=torch.float32)
+            pipe.vae.set_default_attn_processor()
 
         def forward(self, z):
             return self.decoder(self.post_quant_conv(z))
